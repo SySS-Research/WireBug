@@ -204,7 +204,7 @@ class Wizard(Cmd):
                 cmd += f" -v -i {zrtpdowngrade_interface}"
             else:
                 cmd += f" -i {zrtpdowngrade_interface}"
-        run_tool(tool_folder,cmd)
+        run_tool(tool_folder, cmd)
 
 
     def do_evilstun(self, inp):
