@@ -216,7 +216,7 @@ class Wizard(Cmd):
         evilstun_rtpip=input("Enter the fake ip address in the response: ")
         evilstun_rtpport=input("Enter the fake port in the response [16000]: ") or "16000"
         cmd=f"evilstun.py --stunip {evilstun_stunip} --stunport {evilstun_stunport} --rtpip {evilstun_rtpip} --rtpport {evilstun_rtpport}"
-        run_tool(toolf_folder, cmd)
+        run_tool(tool_folder, cmd)
 
 
     def do_exit(self, inp):
