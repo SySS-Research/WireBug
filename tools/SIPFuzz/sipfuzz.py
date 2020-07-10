@@ -96,7 +96,7 @@ args = parser.parse_args()
 
 def get_payload():
 
-    f=open(args.FILE, "r")
+    f=open(args.FILE, "r", newline="")
     if f.mode == "r":
         payload = f.read()
 

@@ -271,7 +271,7 @@ def payload_200():
 
 def payload_individual():
 
-    f=open(args.FILE, "r")
+    f=open(args.FILE, "r", newline="")
     if f.mode == "r":
         payload = f.read()
 
