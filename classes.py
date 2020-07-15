@@ -219,6 +219,23 @@ class Wizard(Cmd):
         run_tool(tool_folder, cmd)
 
 
+    def do_sipfuzz(self, inp):
+        '''A tool for SIP fuzzing'''
+        tool_folder="SIPFuzz"
+        print("A tool for SIP fuzzing ")
+        sipfuzz_dstip=input("Enter the destination SIP server: ")
+        sipfuzz_dstport=input("Enter the destination SIP port [5060]: ") or "5060"
+        sipfuzz_proto=input("Enter the protocol <udp> or <tcp> [udp]: ") or "udp"
+        sipfuzz_file=input("Enter the fuzz request file. Insert \"FUZZ\" at the point you want to fuzz: ")
+        sipfuzz_startpoint=input("Enter the fuzzing start point [1]: ") or "1"
+        sipfuzz_steps=input("Enter the fuzzing steps [1]: ") or "1"
+        sipfuzz_size=input("Enter the fuzzing max. size [2000]: ") or "2000"
+        sipfuzz_char=input("Enter the fuzzing char [A]: ") or "A"
+        sipfuzz_time=input("Enter the delay between the fuzzing steps in seconds [0.5]: ") or "0.5"
+        cmd=f"sipfuzz.py --dst {sipfuzz_dstip} --dport {sipfuzz_dstport} --proto {sipfuzz_proto} --file {sipfuzz_file} --start-point {sipfuzz_startpoint} --steps {sipfuzz_steps} --size {sipfuzz_size} --char {sipfuzz_char} --time {sipfuzz_time}"
+        run_tool(tool_folder, cmd)
+
+
     def do_exit(self, inp):
         '''Exiting the tool'''
         print("Bye")
