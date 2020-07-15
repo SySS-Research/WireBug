@@ -37,6 +37,8 @@ Use the configure.sh script to download and build [Cisco Systems' SRTP library](
 
 - EvilSTUN: A simple tool for fake STUN responses.
 
+- SIPFuzz: A tool for SIP fuzzing.
+
 
 ### Wizard
 The goal of the WireBug tool set is the wizard with tab-completion. This makes it easy to use without knowledge of detailed information about the tool or options. It is recommended to use the tools with the wizard.
