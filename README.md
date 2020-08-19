@@ -39,6 +39,7 @@ Use the configure.sh script to download and build [Cisco Systems' SRTP library](
 
 - SIPFuzz: A tool for SIP fuzzing.
 
+- SIPEnum: This tool enumerates SIP extensions by a given file.
 
 ### Wizard
 The goal of the WireBug tool set is the wizard with tab-completion. This makes it easy to use without knowledge of detailed information about the tool or options. It is recommended to use the tools with the wizard.
@@ -114,6 +115,10 @@ Sent 1 packets.
 [+] Response recived!
 ```
 
+
+## Usage Video
+
+[![SySS Tool Tip WireBug](https://img.youtube.com/vi/3vg899vCksQ/0.jpg)](https://www.youtube.com/watch?v=3vg899vCksQ)
 
 ## Known Issues
 Packet crafting and spoofing tools do not work on localhost, see also at [scapy documents](https://scapy.readthedocs.io/en/latest/troubleshooting.html#i-can-t-ping-127-0-0-1-scapy-does-not-work-with-127-0-0-1-or-on-the-loopback-interface).
