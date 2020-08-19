@@ -129,7 +129,9 @@ def main():
                 sock.connect((args.DST, args.DPORT))
                 sock.send(req.encode())
                 response = sock.recv(1024)
-                sock.close()
+
+                if bytes('100 Trying', 'utf-8') in response:
+                   response = sock.recv(1024)
 
                 if bytes('401 Unauthorized', 'utf-8') in response:
                     print("\033[1;32m[+]\033[0m Authentication required for " + lines[i] + "\r\n")
@@ -140,6 +142,7 @@ def main():
                 elif bytes('200 OK', 'utf-8') in response: 
                     print("\033[1;32m[+]\033[0;32m No authentication required for " + lines[i] + "\r\n")
 
+                sock.close()
                 i += 1
 
             except (KeyboardInterrupt):
