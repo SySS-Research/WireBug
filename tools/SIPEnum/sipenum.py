@@ -132,13 +132,13 @@ def main():
                 sock.close()
 
                 if bytes('401 Unauthorized', 'utf-8') in response:
-                    print("\033[1;32m[+]\033[0m Authentication for " + lines[i] + " required\r\n")
+                    print("\033[1;32m[+]\033[0m Authentication required for " + lines[i] + "\r\n")
 
                 elif bytes('407 Proxy Authentication Required', 'utf-8') in response: 
-                    print("\033[1;32m[+]\033[0m Authentication for " + lines[i] + " required\r\n")
+                    print("\033[1;32m[+]\033[0m Authentication required for " + lines[i] + "\r\n")
 
                 elif bytes('200 OK', 'utf-8') in response: 
-                    print("\033[1;32m[+]\033[0;32m No Authentication for " + lines[i] + " required\r\n")
+                    print("\033[1;32m[+]\033[0;32m No authentication required for " + lines[i] + "\r\n")
 
                 i += 1
 
