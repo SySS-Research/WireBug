@@ -236,6 +236,20 @@ class Wizard(Cmd):
         run_tool(tool_folder, cmd)
 
 
+    def do_sipenum(self, inp):
+        '''A tool for SIP extension enumeration'''
+        tool_folder="SIPEnum"
+        print("A tool for SIP extension enumeration")
+        sipenum_dstip=input("Enter the destination SIP server: ")
+        sipenum_dstport=input("Enter the destination SIP port [5060]: ") or "5060"
+        sipenum_proto=input("Enter the protocol <udp> or <tcp> [udp]: ") or "udp"
+        sipenum_srcip=input("Enter the source ip address: ")
+        sipenum_domain=input("Enter the SIP domain: ")
+        sipenum_wordlist=input("Enter the wordlist with user extensions for enumeration [users/10-99.txt]: ") or "users/10-99.txt"
+        cmd=f"sipenum.py --dst {sipenum_dstip} --dport {sipenum_dstport} --proto {sipenum_proto} --wordlist {sipenum_wordlist} --src {sipenum_srcip} --domain {sipenum_domain}"
+        run_tool(tool_folder, cmd)
+
+
     def do_exit(self, inp):
         '''Exiting the tool'''
         print("Bye")

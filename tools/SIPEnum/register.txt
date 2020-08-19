@@ -1,0 +1,12 @@
+REGISTER sip:USER@DOMAIN SIP/2.0
+Via: SIP/2.0/PROTO SRC
+Max-Forwards: 70
+To: sip:USER@DOMAIN
+From: <sip:USER@DOMAIN>
+Contact: <sip:USER@SRC;transport=PROTO>;expires=600
+Call-ID: CALLID
+CSeq: 1 REGISTER
+User-Agent: WireBug
+Expires: 600
+Content-Length: 0
+
