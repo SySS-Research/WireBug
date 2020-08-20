@@ -114,8 +114,8 @@ def main():
 
             req = payload.replace("USER", lines[i])
             
-            letters = string.digits
             req = req.replace("CALLID", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(32))))
+            req = req.replace("BRANCH", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(10))))
 
 
             if args.PROTOCOL == "tcp":
@@ -140,7 +140,7 @@ def main():
                     print("\033[1;32m[+]\033[0m Authentication required for " + lines[i] + "\r\n")
 
                 elif bytes('200 OK', 'utf-8') in response: 
-                    print("\033[1;32m[+]\033[0;32m No authentication required for " + lines[i] + "\r\n")
+                    print("\033[1;32m[+]\033[0;32m No authentication required for " + lines[i] + "\033[0m\r\n")
 
                 sock.close()
                 i += 1

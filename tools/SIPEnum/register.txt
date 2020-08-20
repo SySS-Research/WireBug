@@ -1,5 +1,5 @@
 REGISTER sip:DOMAIN SIP/2.0
-Via: SIP/2.0/PROTO SRC
+Via: SIP/2.0/PROTO SRC;branch=z9hG4bKBRANCH
 Max-Forwards: 70
 To: sip:USER@DOMAIN
 From: <sip:USER@DOMAIN>
