@@ -1,0 +1,13 @@
+REGISTER sip:DOMAIN SIP/2.0
+Via: SIP/2.0/PROTO SRC;branch=z9hG4bKBRANCH
+Max-Forwards: 70
+To: sip:USER@DOMAIN
+From: <sip:USER@DOMAIN>
+Contact: <sip:USER@SRC;transport=PROTO>;expires=600
+Authorization: Digest username="USER", realm="REALM", nonce="NONCE", uri="URI", response="RESPONSE", algorithm=MD5
+Call-ID: CALLID
+CSeq: 2 REGISTER
+User-Agent: WireBug
+Expires: 600
+Content-Length: 0
+
