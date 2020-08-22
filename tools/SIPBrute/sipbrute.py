@@ -90,7 +90,6 @@ parser.add_argument(
 args = parser.parse_args()
 
 
-
 def get_register():
 
     f=open(args.FILE, "r", newline="")
@@ -115,7 +114,6 @@ def get_register_auth():
         sys.exit(1)
 
 
-
 def replace_payload(payload):
     
     payload = payload.replace("DOMAIN", args.DOMAIN)
@@ -128,7 +126,6 @@ def replace_payload(payload):
         payload = payload.replace("PROTO", "UDP")
 
     return(payload) 
-
 
 
 def calc_auth(response, password, callid, branch):
@@ -155,9 +152,6 @@ def calc_auth(response, password, callid, branch):
     register_auth = register_auth.replace("RESPONSE", str3)
 
     return(register_auth)
-
- 
-
 
 
 def main():
@@ -235,6 +229,5 @@ def main():
 
 if __name__ == "__main__":
     main()
-
 
 
