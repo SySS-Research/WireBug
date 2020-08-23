@@ -56,14 +56,6 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    '--file3',
-    dest="FILE3",
-    type=str,
-    default="cancel.txt",
-    help="The cancel message. Default is \"cancel.txt\""
-)
-
-parser.add_argument(
     '--wordlist',
     dest="WORDLIST",
     type=str,
@@ -129,18 +121,6 @@ def get_register_auth():
         sys.exit(1)
 
 
-def get_cancel():
-
-    f=open(args.FILE3, "r", newline="")
-    if f.mode == "r":
-        payload = f.read()
-
-        return(payload)
-
-    else:
-        sys.exit(1)
-
-
 def replace_payload(payload):
     
     payload = payload.replace("DOMAIN", args.DOMAIN)
@@ -153,16 +133,6 @@ def replace_payload(payload):
         payload = payload.replace("PROTO", "UDP")
 
     return(payload) 
-
-
-def create_cancel(callid, branch):
-
-    cancel = get_cancel()
-    cancel = replace_payload(cancel)
-    cancel = cancel.replace("CALLID", callid)
-    cancel = cancel.replace("BRANCH", branch)
-
-    return(cancel)
 
 
 def calc_auth(response, password, callid, branch):
@@ -252,13 +222,13 @@ def main():
 
                 if result == "401" or result == "407":
                     if args.v:
-                        print("\033[1;34m[*]\033[0m Nonce recived")
+                        print("\033[1;34m[*]\033[0m Nonce received")
                     auth = calc_auth(response, lines[i], callid, branch)
                     sock.send(auth.encode())
                     response = sock.recv(1024)
                     result = get_results(response)
                     if result == "200": 
-                        print("\033[1;32m[+]\033[0m Registred! Password is: " + lines[i])
+                        print("\033[1;32m[+]\033[0m Registered! Password is: " + lines[i])
                         sock.close()
                         sys.exit(0)
                     else:
@@ -282,7 +252,6 @@ def main():
         except (KeyboardInterrupt):
             print("\033[1;34m[*]\033[0m User interruption. Exiting ...")
             sys.exit(0)
-
 
 
 if __name__ == "__main__":
