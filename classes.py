@@ -89,7 +89,7 @@ class Wizard(Cmd):
         elif lldpspoof_vendor == "unify":
             lldpspoof_mac = input("Enter the MAC address of an unify device <00:1a:e8:XX:XX:XX> [00:1a:e8:00:00:01]: ") or "00:1a:e8:00:00:01"
             lldpspoof_verbose = input("Verbose mode (will capture the possible response and open it in wireshark)? <y> or <n> [n]: ") or "n"
-            cmd = "lldpspoof.py -V {lldpspoof_vendor} -m {lldpspoof_mac} -i {lldpspoof_interface}"
+            cmd = f"lldpspoof.py -V {lldpspoof_vendor} -m {lldpspoof_mac} -i {lldpspoof_interface}"
             if lldpspoof_verbose == "y":
                 cmd += " -v"
             run_tool(tool_folder, cmd)
