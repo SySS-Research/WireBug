@@ -8,6 +8,7 @@ import time
 import random
 import string
 import re
+import ssl
 from hashlib import md5
 
 
@@ -93,6 +94,21 @@ parser.add_argument(
     help="Verbose mode"
 )
 
+parser.add_argument(
+    '--key',
+    dest="KEY",
+    type=str,
+    default="key.key",
+    help="Private key file for tls connection. Default is \"key.key\""
+)
+
+parser.add_argument(
+    '--crt',
+    dest="CRT",
+    type=str,
+    default="crt.crt",
+    help="Certificate for tls connection. Default is \"crt.crt\""
+)
 
 args = parser.parse_args()
 
@@ -129,6 +145,8 @@ def replace_payload(payload):
 
     if args.PROTOCOL == "tcp":
         payload = payload.replace("PROTO", "TCP")
+    elif args.PROTOCOL == "tls":
+        payload = payload.replace("PROTO", "TLS")
     else:
         payload = payload.replace("PROTO", "UDP")
 
@@ -204,6 +222,10 @@ def main():
 
             if args.PROTOCOL == "tcp":
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+            elif args.PROTOCOL == "tls": 
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1, keyfile=args.KEY, certfile=args.CRT)
 
             else:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

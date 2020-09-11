@@ -74,6 +74,22 @@ parser.add_argument(
     help="The target domain. If nothing is set the target domain equals the destination IP address"
 )
 
+parser.add_argument(
+    '--key',
+    dest="KEY",
+    type=str,
+    default="key.key",
+    help="Private key file for tls connection. Default is \"key.key\""
+)
+
+parser.add_argument(
+    '--crt',
+    dest="CRT",
+    type=str,
+    default="crt.crt",
+    help="Certificate for tls connection. Default is \"crt.crt\""
+)
+
 args = parser.parse_args()
 
 

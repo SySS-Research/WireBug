@@ -41,6 +41,8 @@ Use the configure.sh script to download and build [Cisco Systems' SRTP library](
 
 - SIPEnum: This tool enumerates SIP extensions by a given file.
 
+- SIPBrute: A tool for online brute force attacks against SIP proxies.
+
 ### Wizard
 The goal of the WireBug tool set is the wizard with tab-completion. This makes it easy to use without knowledge of detailed information about the tool or options. It is recommended to use the tools with the wizard.
 
@@ -59,7 +61,7 @@ python wirebug.py
       \__/\  / |__||__|    \___  .______  /____/\___  / 
            \/                  \/       \/     /_____/  
 
-by Moritz Abrell - SySS GmbH, 2019
+by Moritz Abrell - SySS GmbH, 2019 - 2020
 
 
 

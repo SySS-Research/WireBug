@@ -242,11 +242,39 @@ class Wizard(Cmd):
         print("A tool for SIP extension enumeration")
         sipenum_dstip=input("Enter the destination SIP server: ")
         sipenum_dstport=input("Enter the destination SIP port [5060]: ") or "5060"
-        sipenum_proto=input("Enter the protocol <udp> or <tcp> [udp]: ") or "udp"
+        sipenum_proto=input("Enter the protocol <udp>, <tcp> or <tls> [udp]: ") or "udp"
+        if sipenum_proto == "tls":
+            sipenum_crt=input("Enter the certificate file [crt.crt]: ") or "crt.crt"
+            sipenum_key=input("Enter the private key file [key.key]: ") or "key.key"
         sipenum_srcip=input("Enter the source ip address: ")
         sipenum_domain=input("Enter the SIP domain: ")
         sipenum_wordlist=input("Enter the wordlist with user extensions for enumeration [users/10-99.txt]: ") or "users/10-99.txt"
-        cmd=f"sipenum.py --dst {sipenum_dstip} --dport {sipenum_dstport} --proto {sipenum_proto} --wordlist {sipenum_wordlist} --src {sipenum_srcip} --domain {sipenum_domain}"
+        if sipenum_proto == "tls":        
+            cmd=f"sipenum.py --dst {sipenum_dstip} --dport {sipenum_dstport} --proto {sipenum_proto} --wordlist {sipenum_wordlist} --src {sipenum_srcip} --domain {sipenum_domain} --key {sipenum_key} --crt {sipenum_crt}"
+        else:
+            cmd=f"sipenum.py --dst {sipenum_dstip} --dport {sipenum_dstport} --proto {sipenum_proto} --wordlist {sipenum_wordlist} --src {sipenum_srcip} --domain {sipenum_domain}"
+        run_tool(tool_folder, cmd)
+
+
+    def do_sipbrute(self, inp):
+        '''A tool for SIP online brute force attacks'''
+        tool_folder="SIPBrute"
+        print("A tool for SIP online brute force attacks")
+        sipbrute_dstip=input("Enter the destination SIP server: ")
+        sipbrute_dstport=input("Enter the destination SIP port [5060]: ") or "5060"
+        sipbrute_proto=input("Enter the protocol <udp>, <tcp> or <tls> [udp]: ") or "udp"
+        if sipbrute_proto == "tls":
+            sipbrute_crt=input("Enter the certificate file [crt.crt]: ") or "crt.crt"
+            sipbrute_key=input("Enter the private key file [key.key]: ") or "key.key"
+        sipbrute_srcip=input("Enter the source ip address: ")
+        sipbrute_domain=input("Enter the SIP domain: ")
+        sipbrute_user=input("Enter the SIP username: ")
+        sipbrute_wordlist=input("Enter the wordlist with passwords for the brute force attack [passwords/1-999999.txt]: ") or "passwords/1-999999.txt"
+        cmd=f"sipbrute.py --dst {sipbrute_dstip} --dport {sipbrute_dstport} --proto {sipbrute_proto} --wordlist {sipbrute_wordlist} --src {sipbrute_srcip} --domain {sipbrute_domain}"
+        if sipbrute_proto == "tls":
+            cmd=f"sipbrute.py --dst {sipbrute_dstip} --dport {sipbrute_dstport} --proto {sipbrute_proto} --user {sipbrute_user} --wordlist {sipbrute_wordlist} --src {sipbrute_srcip} --domain {sipbrute_domain} --key {sipbrute_key} --crt {sipbrute_crt}"
+        else:
+            cmd=f"sipbrute.py --dst {sipbrute_dstip} --dport {sipbrute_dstport} --proto {sipbrute_proto} --user {sipbrute_user} --wordlist {sipbrute_wordlist} --src {sipbrute_srcip} --domain {sipbrute_domain}"
         run_tool(tool_folder, cmd)
 
 
