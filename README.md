@@ -1,6 +1,7 @@
 # WireBug
 
-WireBug is a tool set for VLAN and VoIP penetration testing. It is designed as a wizard which makes it easy to use. The tools are build for single using too, so every tool is its own python or bash program.  
+WireBug is a tool set for Voice-over-IP penetration testing. 
+It is designed as a wizard which makes it easy to use. The tools are build for single using too, so every tool is its own python or bash program.
 
 ## Installation
 
@@ -42,6 +43,8 @@ Use the configure.sh script to download and build [Cisco Systems' SRTP library](
 - SIPEnum: This tool enumerates SIP extensions by a given file.
 
 - SIPBrute: A tool for online brute force attacks against SIP proxies.
+
+- RTPFuzz: A tool for fuzzing an injecting random RTP packets (noise) into running streams. 
 
 ### Wizard
 The goal of the WireBug tool set is the wizard with tab-completion. This makes it easy to use without knowledge of detailed information about the tool or options. It is recommended to use the tools with the wizard.
@@ -122,13 +125,9 @@ Sent 1 packets.
 
 [![SySS Tool Tip WireBug](https://img.youtube.com/vi/3vg899vCksQ/0.jpg)](https://www.youtube.com/watch?v=3vg899vCksQ)
 
-## Known Issues
-Packet crafting and spoofing tools do not work on localhost, see also at [scapy documents](https://scapy.readthedocs.io/en/latest/troubleshooting.html#i-can-t-ping-127-0-0-1-scapy-does-not-work-with-127-0-0-1-or-on-the-loopback-interface).
-E.g. if you want to tunnel the traffic of SIPCraft through a TLS-Proxy, you couldn't use the loopback interface. 
-
 
 ## Author
-Moritz Abrell, SySS GmbH 2019-2020
+Moritz Abrell, SySS GmbH 2019-2021
 
 ## Disclaimer 
 Use at your own risk. Do not use without full consent of everyone involved. For educational purposes only.

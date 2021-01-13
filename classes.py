@@ -278,6 +278,25 @@ class Wizard(Cmd):
         run_tool(tool_folder, cmd)
 
 
+    def do_rtpfuzz(self, inp):
+        '''A tool for fuzzing an injecting random RTP packets (noise) into running streams'''
+        tool_folder="RTPFuzz"
+        print("A tool for fuzzing an injecting random RTP packets (noise) into running streams")
+        rtpfuzz_dstip=input("Enter RTP destination ip address: ")
+        rtpfuzz_dstport=input("Enter RTP destination port: ")
+        rtpfuzz_srcip=input("Enter RTP source ip address: ")
+        rtpfuzz_srcport=input("Enter RTP source port: ")
+        rtpfuzz_sseq=input("Enter start sequence number [0]: ") or "0"
+        rtpfuzz_eseq=input("Enter end sequence number (amount of packets) [500]: ") or "500"
+        rtpfuzz_ssrc=input("Enter the synchronization source identifier [208851373]: ") or "208851373"
+        rtpfuzz_type=input("Enter payload type. Default is \"8\", which is PCMA [8]: ") or "8"
+        rtpfuzz_time=input("Enter timestamp [2000000]: ") or "2000000"
+       
+
+        cmd=f"rtpfuzz.py --dst {rtpfuzz_dstip} --dport {rtpfuzz_dstport} --src {rtpfuzz_srcip} --sport {rtpfuzz_srcport} --startseq {rtpfuzz_sseq} --endseq {rtpfuzz_eseq} --ssrc {rtpfuzz_ssrc} --type {rtpfuzz_type} --time {rtpfuzz_time}"
+        run_tool(tool_folder, cmd)
+
+
     def do_exit(self, inp):
         '''Exiting the tool'''
         print("Bye")
