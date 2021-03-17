@@ -140,6 +140,8 @@ def main():
             try:
                 sock.settimeout(2.0)
                 sock.connect((args.DST, args.DPORT))
+                lip, lport = sock.getsockname()
+                payload = payload.replace("LPORT", str(lport))
                 sock.send(payload.encode())
                 print("\033[1;34m[*]\033[0m " + i + " sent")
                 response = sock.recv(1024)
@@ -172,25 +174,31 @@ def main():
                         allow_line = response_lines[idx_allow[0]]
                         print("\033[1;32m[+]\033[0m " + allow_line)
 
+                    regex_reason = re.compile("^Reason")
+                    idx_reason = [i for i, item in enumerate(response_lines) if re.search(regex_reason, item)]
+                    if len(idx_reason) > 0:
+                        reason_line = response_lines[idx_reason[0]]
+                        print("\033[1;32m[+]\033[0m " + reason_line)
+
                     print("\n")
                 else:
-                    print("No response. Skipping")
+                    print("\033[1;31m[!]\033[0m No response recived")
 
                 sock.close()
 
             except (KeyboardInterrupt):
                 print("\033[1;34m[*]\033[0m User interruption. Exiting ...")
                 sys.exit(0)
-            
+
             except:
                 print("\033[1;31m[!]\033[0m No response recived")
                 print("\n")
                 sock.close()
 
+
         except (KeyboardInterrupt):
             print("\033[1;34m[*]\033[0m User interruption. Exiting ...")
             sys.exit(0)
-
 
 
 if __name__ == "__main__":
