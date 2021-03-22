@@ -5,7 +5,7 @@ It is designed as a wizard which makes it easy to use. The tools are build for s
 
 ## Installation
 
-Read the Installation Guide in the[wiki](https://github.com/SySS-Research/WireBug/wiki/Installation-Guide).
+Read the Installation Guide in the [wiki](https://github.com/SySS-Research/WireBug/wiki/Installation-Guide).
 
 ## Tools
 
