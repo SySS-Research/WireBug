@@ -150,31 +150,31 @@ def main():
                     response = response.decode("utf-8")
                     response_lines = str(response).split("\r\n")
 
-                    regex_rl = re.compile("^SIP/2.0")
+                    regex_rl = re.compile("^SIP/2.0", re.IGNORECASE)
                     idx_rl = [i for i, item in enumerate(response_lines) if re.search(regex_rl, item)]
                     if len(idx_rl) > 0:
                         rl_line = response_lines[idx_rl[0]]
                         print("\033[1;32m[+]\033[0m Response-Line: \033[0;32m" + rl_line + "\033[0m")
 
-                    regex_server = re.compile("^Server")
+                    regex_server = re.compile("^Server", re.IGNORECASE)
                     idx_server = [i for i, item in enumerate(response_lines) if re.search(regex_server, item)]
                     if len(idx_server) > 0:
                         server_line = response_lines[idx_server[0]]
                         print("\033[1;32m[+]\033[0m " + server_line)
 
-                    regex_ua = re.compile("^User-Agent")
+                    regex_ua = re.compile("^User-Agent", re.IGNORECASE)
                     idx_ua = [i for i, item in enumerate(response_lines) if re.search(regex_ua, item)]
                     if len(idx_ua) > 0:
                         ua_line = response_lines[idx_ua[0]]
                         print("\033[1;32m[+]\033[0m " + ua_line)
 
-                    regex_allow = re.compile("^Allow")
+                    regex_allow = re.compile("^Allow", re.IGNORECASE)
                     idx_allow = [i for i, item in enumerate(response_lines) if re.search(regex_allow, item)]
                     if len(idx_allow) > 0:
                         allow_line = response_lines[idx_allow[0]]
                         print("\033[1;32m[+]\033[0m " + allow_line)
 
-                    regex_reason = re.compile("^Reason")
+                    regex_reason = re.compile("^Reason", re.IGNORECASE)
                     idx_reason = [i for i, item in enumerate(response_lines) if re.search(regex_reason, item)]
                     if len(idx_reason) > 0:
                         reason_line = response_lines[idx_reason[0]]

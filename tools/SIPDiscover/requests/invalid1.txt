@@ -5,7 +5,7 @@ To: sip:USER@DOMAIN
 From: <sip:USER@DOMAIN>
 Contact: <sip:USER@SRC:LPORT;transport=PROTO>;expires=600
 Call-ID: CALLID
-CSeq: 1 BYE
+CSeq: 1 INVITE
 User-Agent: WireBug
 Expires: 600
 Content-Length: 0

@@ -22,7 +22,7 @@ parser.add_argument(
     '-m',
     dest="MODE",
     type=str,
-    help="Possible options are \"past\", \"today\" or \"future\". Default is past"
+    help="Possible options are \"past\" or \"future\". Default is \"past\""
 )
 
 args = parser.parse_args()
@@ -64,9 +64,6 @@ def handle_time():
 
     elif args.MODE == "future":
         timestamp = 4290364800
-
-    elif args.MODE == "today":
-        timestamp = 3785788800
 
     else:
         timestamp = 3407356800

@@ -1,3 +1,0 @@
-bridge-utils
-wireshark-common
-libnetfilter-queue-dev

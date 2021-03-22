@@ -13,8 +13,6 @@ def run_tool(tool_folder, command):
     subprocess.run(cmd, shell=False, cwd=os.path.join(cwd, 'tools', tool_folder))
 
 
-
-
 class Wizard(Cmd):
     prompt = '\033[0;32mwizard > \033[0m'
     intro = logo()
@@ -56,19 +54,6 @@ class Wizard(Cmd):
                  f'timeshift.py -s {timeshift_src_ip} -m {timeshift_mode}')
 
 
-    def do_doubleencap(self, inp):
-        '''This tool is tagging a packet twice. If there is a native VLAN on the access port and on the trunk port configured, it is possible to hop into VLAN's'''
-        tool_folder = "DoubleEncapsulation"
-        print("This tool is tagging a packet twice. If there is a native VLAN on the access port and on the trunk port configured, it is possible to hop into VLAN's")
-        doubleencap_interface = input("Enter the interface: ")
-        doubleencap_src_ip = input("Enter the source ip address: ")
-        doubleencap_dst_ip = input("Enter the destination ip address: ")
-        doubleencap_native_vid = input("Enter the native VLAN ID: ")
-        doubleencap_dst_vid = input("Enter the destination VLAN ID: ")
-        doubleencap_count = input("Enter the amount of packets which will be sent [1]: ") or "1"
-        run_tool(tool_folder, f'doubleencapsulation.py -i {doubleencap_interface} -s {doubleencap_src_ip} -d {doubleencap_dst_ip} --nvid {doubleencap_native_vid} --dvid {doubleencap_dst_vid} -c {doubleencap_count}')
-
-
     def do_lldpspoof(self, inp):
         '''This tool is for spoofing LLDP-MED packets with different vendor specific attributes. It is useful to jump into VoIP VLAN if LLDP-MED is configured'''
         tool_folder = "SaCLaC"
@@ -85,7 +70,6 @@ class Wizard(Cmd):
             if lldpspoof_verbose == "y":
                 cmd += " -v"
             run_tool(tool_folder, cmd)
-
         elif lldpspoof_vendor == "unify":
             lldpspoof_mac = input("Enter the MAC address of an unify device <00:1a:e8:XX:XX:XX> [00:1a:e8:00:00:01]: ") or "00:1a:e8:00:00:01"
             lldpspoof_verbose = input("Verbose mode (will capture the possible response and open it in wireshark)? <y> or <n> [n]: ") or "n"
@@ -93,7 +77,6 @@ class Wizard(Cmd):
             if lldpspoof_verbose == "y":
                 cmd += " -v"
             run_tool(tool_folder, cmd)
-
         else:
             print("Please set a valid vendor")
 
@@ -106,7 +89,6 @@ class Wizard(Cmd):
         lldpdos_mode = input("Enter the mode <tag> <untag> [tag]: ") or "tag"
         lldpdos_mac = input("Enter the MAC address of the switch [78:d0:04:00:00:01]: ") or "78:d0:04:00:00:01"
         lldpdos_verbose = input("Verbose mode (will capture the possible response and open it in wireshark)? <y> or <n> [n]: ") or "n"
-
         cmd = f"lldpspoof.py --dos -m {lldpdos_mac} -i {lldpdos_interface}"
         if lldpdos_mode == "tag":
             if lldpdos_verbose == "y":
@@ -119,7 +101,6 @@ class Wizard(Cmd):
             else:
                 cmd += " --untag"
             run_tool(tool_folder, cmd)
-
         else:
             print("Please set a valid mode")
 
@@ -148,27 +129,6 @@ class Wizard(Cmd):
         run_tool(tool_folder, cmd)
 
 
-    def do_sipcraft(self, inp):
-        '''This tool is for crafting and spoofing SIP packets'''
-        tool_folder="SIPCraft"
-        print("This tool is for crafting and spoofing SIP Packets")
-        sipcraft_protocol=input("Enter the protocol <udp> or <tcp> [udp]: ") or "udp"
-        sipcraft_message=input("Enter the SIP message <option> <invite> <register> <200> <individual> [option]: ") or "option"
-        if sipcraft_message == "individual":
-            sipcraft_file=input("Enter the individual file for SIP payload [./tools/sipcraft/individual.txt]: ") or "individual.txt"
-
-        sipcraft_srcip=input("Enter the source IP address [127.0.0.1]: ") or "127.0.0.1"
-        sipcraft_dstip=input("Enter the destination IP address [127.0.0.1]: ") or "127.0.0.1"
-        sipcraft_sport=input("Enter the source port [5060]: ") or "5060"
-        sipcraft_dport=input("Enter the destination port [5060]: ") or "5060"
-        cmd=f"sipcraft.py --proto {sipcraft_protocol} --src {sipcraft_srcip} --dst {sipcraft_dstip} --sport {sipcraft_sport} --dport {sipcraft_dport}"
-        if sipcraft_message == "individual":
-            cmd += f" --msg individual --file {sipcraft_file}"
-        else:
-            cmd += f" --msg {sipcraft_message}"
-        run_tool(tool_folder, cmd)
-
-
     def do_sipcrack(self, inp):
         '''A tool for brute forcing SIP digest authentication'''
         tool_folder="CrackTheSIP"
@@ -194,16 +154,9 @@ class Wizard(Cmd):
         tool_folder = "ZRTPDowngrade"
         print("A tool to downgrade the ZRTP media stream")
         zrtpdowngrade_interface=input("Enter the interface on which the tool will listen on [all]: ") or "all"
-        zrtpdowngrade_verbose=input("Verbose mode?<y> <n> [y]: ") or "y"
         cmd = f"zrtpdowngrade.py"
-        if zrtpdowngrade_interface == "all":
-            if zrtpdowngrade_verbose == "y":
-                cmd += " -v"
-        else:
-            if zrtpdowngrade_verbose == "y":
-                cmd += f" -v -i {zrtpdowngrade_interface}"
-            else:
-                cmd += f" -i {zrtpdowngrade_interface}"
+        if zrtpdowngrade_interface != "all":
+            cmd += f" -i {zrtpdowngrade_interface}"
         run_tool(tool_folder, cmd)
 
 
@@ -290,10 +243,45 @@ class Wizard(Cmd):
         rtpfuzz_eseq=input("Enter end sequence number (amount of packets) [500]: ") or "500"
         rtpfuzz_ssrc=input("Enter the synchronization source identifier [208851373]: ") or "208851373"
         rtpfuzz_type=input("Enter payload type. Default is \"8\", which is PCMA [8]: ") or "8"
-        rtpfuzz_time=input("Enter timestamp [2000000]: ") or "2000000"
-       
-
+        rtpfuzz_time=input("Enter timestamp [2000000]: ") or "2000000" 
         cmd=f"rtpfuzz.py --dst {rtpfuzz_dstip} --dport {rtpfuzz_dstport} --src {rtpfuzz_srcip} --sport {rtpfuzz_srcport} --startseq {rtpfuzz_sseq} --endseq {rtpfuzz_eseq} --ssrc {rtpfuzz_ssrc} --type {rtpfuzz_type} --time {rtpfuzz_time}"
+        run_tool(tool_folder, cmd)
+
+
+    def do_rtpaudioinject(self, inp):
+        '''A tool for injecting a raw audio file into running streams'''
+        tool_folder="RTPAudioInjection"
+        print("A tool for injecting a raw audio file into running streams")
+        rtpai_dstip=input("Enter RTP destination ip address: ")
+        rtpai_dstport=input("Enter RTP destination port: ")
+        rtpai_srcip=input("Enter RTP source ip address: ")
+        rtpai_srcport=input("Enter RTP source port: ")
+        rtpai_sseq=input("Enter start sequence number [0]: ") or "0"
+        rtpai_ssrc=input("Enter the synchronization source identifier [208851373]: ") or "208851373"
+        rtpai_type=input("Enter payload type. Default is \"8\", which is PCMA [8]: ") or "8"
+        rtpai_time=input("Enter timestamp [2000000]: ") or "2000000"
+        rtpai_file=input("Enter raw audio file [rickroll.g711a]: ") or "rickroll.g711a"
+        cmd=f"rtpaudioinject.py --dst {rtpai_dstip} --dport {rtpai_dstport} --src {rtpai_srcip} --sport {rtpai_srcport} --startseq {rtpai_sseq} --ssrc {rtpai_ssrc} --type {rtpai_type} --time {rtpai_time} --file {rtpai_file}"
+        run_tool(tool_folder, cmd)
+
+
+    def do_sipdiscover(self, inp):
+        '''A tool to discover SIP services'''
+        tool_folder="SIPDiscover"
+        print("A tool to discover SIP services")
+        sipdiscover_dstip=input("Enter the destination SIP server: ")
+        sipdiscover_dstport=input("Enter the destination SIP port [5060]: ") or "5060"
+        sipdiscover_proto=input("Enter the protocol <udp>, <tcp> or <tls> [udp]: ") or "udp"
+        if sipdiscover_proto == "tls":
+            sipdiscover_crt=input("Enter the certificate file [crt.crt]: ") or "crt.crt"
+            sipdiscover_key=input("Enter the private key file [key.key]: ") or "key.key"
+        sipdiscover_srcip=input("Enter the source ip address: ")
+        sipdiscover_domain=input("Enter the SIP domain: ")
+        sipdiscover_user=input("Enter the SIP username: ")
+        if sipdiscover_proto == "tls":
+            cmd=f"sipdiscover.py --dst {sipdiscover_dstip} --dport {sipdiscover_dstport} --proto {sipdiscover_proto} --src {sipdiscover_srcip} --domain {sipdiscover_domain} --user {sipdiscover_user} --crt {sipdiscover_crt} --key {sipdiscover_key}"
+        else:
+            cmd=f"sipdiscover.py --dst {sipdiscover_dstip} --dport {sipdiscover_dstport} --proto {sipdiscover_proto} --src {sipdiscover_srcip} --domain {sipdiscover_domain} --user {sipdiscover_user}"
         run_tool(tool_folder, cmd)
 
 

@@ -2,7 +2,7 @@ UPDATE sip:USER@DOMAIN SIP/2.0
 Via: SIP/2.0/PROTO SRC:LPORT;branch=z9hG4bKBRANCH
 Max-Forwards: 70
 To: sip:USER@DOMAIN
-From: <sip:USER@DOMAIN>
+From: <sip:USER@DOMAIN>;tag=11111111
 Contact: <sip:USER@SRC:LPORT;transport=PROTO>;expires=600
 Call-ID: CALLID
 CSeq: 1 UPDATE

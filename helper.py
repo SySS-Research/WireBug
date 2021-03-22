@@ -29,7 +29,7 @@ def logo():
       \__/\  / |__||__|    \___  .______  /____/\___  /
            \/                  \/       \/     /_____/
 
-by Moritz Abrell - SySS GmbH, 2019 - 2020
+by Moritz Abrell - SySS GmbH, 2019 - 2021
 
 
 Follow the wizard to use WireBug.
