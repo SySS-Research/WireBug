@@ -225,7 +225,7 @@ def main():
 
             elif args.PROTOCOL == "tls": 
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1, keyfile=args.KEY, certfile=args.CRT)
+                sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1_2, keyfile=args.KEY, certfile=args.CRT)
 
             else:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
