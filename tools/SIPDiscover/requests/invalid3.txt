@@ -1,0 +1,12 @@
+BYE sip:USER@DOMAIN SIP/2.0
+Via: SIP/2.0/PROTO SRC:LPORT;branch=z9hG4bKBRANCH
+Max-Forwards: 70
+To: sip:USER@DOMAIN
+From: <sip:USER@DOMAIN>
+Contact: <sip:USER@SRC:LPORT;transport=PROTO>;expires=600
+Call-ID: 
+CSeq: 1 BYE
+User-Agent: WireBug
+Expires: 600
+Content-Length: 0
+
