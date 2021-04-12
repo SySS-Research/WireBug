@@ -1,7 +1,7 @@
 OPTIONS sip:127.0.0.1 SIP/2.0
 Via: SIP/2.0/TCP 127.0.0.1:5060;branch=z9hG4bK1234567890
-To: <sip:FUZZ@127.0.0.1:5060>
-From: <sip:100@127.0.0.1:5060>
+To: <sip:100@127.0.0.1:5060>
+From: "FUZZ" <sip:100@127.0.0.1:5060>
 Call-ID: 1
 CSeq: 1 OPTIONS
 Contact: <sip:127.0.0.1:5060>

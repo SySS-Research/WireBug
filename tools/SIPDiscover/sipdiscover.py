@@ -174,6 +174,12 @@ def main():
                         allow_line = response_lines[idx_allow[0]]
                         print("\033[1;32m[+]\033[0m " + allow_line)
 
+                    regex_warning = re.compile("^Warning", re.IGNORECASE)
+                    idx_warning = [i for i, item in enumerate(response_lines) if re.search(regex_warning, item)]
+                    if len(idx_warning) > 0:
+                        warning_line = response_lines[idx_warning[0]]
+                        print("\033[1;32m[+]\033[0m " + warning_line)
+
                     regex_reason = re.compile("^Reason", re.IGNORECASE)
                     idx_reason = [i for i, item in enumerate(response_lines) if re.search(regex_reason, item)]
                     if len(idx_reason) > 0:
