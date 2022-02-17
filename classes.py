@@ -105,16 +105,16 @@ class Wizard(Cmd):
             print("Please set a valid mode")
 
 
-    def do_decodesrtp(self, inp):
+    def do_decryptsrtp(self, inp):
         '''If you have the AES key from the SDP crypto attribute of the signaling part, you can decrypt the SRTP-SDES stream with this tool'''
-        tool_folder = "DecodeSRTP"
+        tool_folder = "DecryptSRTP"
         print("If you have the AES key from the SDP crypto attribute of the signaling part, you can decrypt the SRTP-SDES stream with this tool")
         print("Sniff the RTP Stream and extract only the RTP part in a separate PCAP file")
-        decodesrtp_keysize = input("Enter the keysize <128> or <256> [128]: ") or "128"
-        decodesrtp_key = input("Enter the AES key base64 encoded: ")
-        decodesrtp_infile = input("Enter the infile containing the extracted RTP stream: ")
-        decodesrtp_outfile = input("Enter the outfile (if nothing is set the file is stored under ./tools/DecodeSRTP/): ")
-        run_tool(tool_folder, f"decodesrtp.sh {decodesrtp_keysize} {decodesrtp_key} {decodesrtp_infile} {decodesrtp_outfile}")
+        decryptsrtp_keysize = input("Enter the keysize <128> or <256> [128]: ") or "128"
+        decryptsrtp_key = input("Enter the AES key base64 encoded: ")
+        decryptsrtp_infile = input("Enter the infile containing the extracted RTP stream: ")
+        decryptsrtp_outfile = input("Enter the outfile (if nothing is set the file is stored under ./tools/DeccryptSRTP/): ")
+        run_tool(tool_folder, f"decryptsrtp.sh {decryptsrtp_keysize} {decryptsrtp_key} {decryptsrtp_infile} {decryptsrtp_outfile}")
 
 
     def do_cdpanalyze(self, inp):

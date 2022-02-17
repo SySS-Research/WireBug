@@ -17,7 +17,7 @@ Read the Installation Guide in the [wiki](https://github.com/SySS-Research/WireB
 
 - SaCLaC: This includes two python programs. One for spoofing fake LLDP-MED packets to getting into VoIP VLAN or trigger a DoS by instruct the client to set a VLAN-Tag and one to analyze CDP Information of a PCAP File. 
 
-- DecodeSRTP: This script makes it easy to use the [Cisco Systems' SRTP library](https://github.com/cisco/libsrtp) for decrypting a SRTP-SDES Stream if the AES-Key was extracted from the signalling part.
+- DecryptSRTP: This script makes it easy to use the [Cisco Systems' SRTP library](https://github.com/cisco/libsrtp) for decrypting a SRTP-SDES Stream if the AES-Key was extracted from the signalling part.
 
 - CrackTheSIP: A simple brute force tool for cracking SIP digest authentication by using a word list.  
 
@@ -76,10 +76,10 @@ wizard > help
 
 Documented commands (type help <topic>):
 ========================================
-bridge      evilstun  lldpspoof       sipcrack     timeshift    
-cdpanalyze  exit      rtpaudioinject  sipdiscover  vlanenum     
-clear       help      rtpfuzz         sipenum      zrtpdowngrade
-decodesrtp  lldpdos   sipbrute        sipfuzz
+bridge       evilstun  lldpspoof       sipcrack     timeshift
+cdpanalyze   exit      rtpaudioinject  sipdiscover  vlanenum
+clear        help      rtpfuzz         sipenum      zrtpdowngrade
+decryptsrtp  lldpdos   sipbrute        sipfuzz
 ```
 
 ## Sample Usage Video

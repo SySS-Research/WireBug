@@ -89,6 +89,15 @@ parser.add_argument(
 )
 
 parser.add_argument(
+    '--pw',
+    dest="PASSWORD",
+    type=str,
+    default=None,
+    help="The password to test. If a password is given, the wordlist parameter will be ignored."
+)
+
+
+parser.add_argument(
     '-v',
     action='store_true',
     help="Verbose mode"
@@ -180,7 +189,7 @@ def calc_auth(response, password, callid, branch):
 
 
 def get_results(response):
-
+    
     if bytes('401 Unauthorized', 'utf-8') in response:
         return("401")
 
@@ -197,13 +206,17 @@ def get_results(response):
         return("403")
 
     else:
-        print("\033[1;34m[*]\033[0m Unexpected response")
+        print("\033[1;31m[!]\033[0m Unexpected response. Exiting ...")
         sys.exit(0)
 
 
 def main():
 
-    lines = [line.rstrip('\n') for line in open(args.WORDLIST)]
+    if args.PASSWORD is None:
+        lines = [line.rstrip('\n') for line in open(args.WORDLIST)]
+    else:
+        lines = []
+        lines.append(args.PASSWORD)
 
     i = 0
 
@@ -259,6 +272,8 @@ def main():
                 
                 else:
                     sock.close()
+                    print("\033[1;31m[!]\033[0m Unexpected response. Exiting ...")
+                    sys.exit(0)
 
             except (KeyboardInterrupt):
                 print("\033[1;34m[*]\033[0m User interruption. Exiting ...")

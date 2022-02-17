@@ -133,7 +133,7 @@ def main():
             elif args.PROTOCOL == "tls": 
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 sock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_TLSv1_2, keyfile=args.KEY, certfile=args.CRT)
-
+            
             else:
                 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
@@ -204,8 +204,12 @@ def main():
 
         except (KeyboardInterrupt):
             print("\033[1;34m[*]\033[0m User interruption. Exiting ...")
+            sock.close()
             sys.exit(0)
 
+        except:
+            sock.close()
+ 
 
 if __name__ == "__main__":
     main()

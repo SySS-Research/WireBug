@@ -106,12 +106,12 @@ with open(args.FILE, "rb") as f:
         filelen = len(byte)
         x = 0
         while x < filelen:
-            y = x+700
+            y = x+160
             payload = bytearray(byte[x:y])
             send_packet(i, payload, time)
             i+=1
-            time+=700
-            x+=700
+            time+=160
+            x+=160
 
 
 

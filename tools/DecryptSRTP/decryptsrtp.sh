@@ -9,7 +9,7 @@ outfile=$4
 
 if [ -z "$keysize" ]||[ -z "$key" ]||[ -z "$infile" ];then
 
-	echo "Usage: ./decodesrtp.sh <key size> <key base64 encoded> <infile pcap> <(optional) outfile>"
+	echo "Usage: ./decryptsrtp.sh <key size> <key base64 encoded> <infile pcap> <(optional) outfile>"
 	echo ""
 	echo ""
 	echo "key size	=	use encryption (use 128 or 256 for key size)"
