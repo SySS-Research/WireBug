@@ -103,6 +103,9 @@ def replace_payload(payload):
     payload = payload.replace("USER", args.USER)
     payload = payload.replace("CALLID", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(32))))
     payload = payload.replace("BRANCH", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(10))))
+    
+    if "TAG" in payload:
+        payload = payload.replace("TAG", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(8))))
 
     if args.PROTOCOL == "tcp":
         payload = payload.replace("PROTO", "TCP")

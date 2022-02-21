@@ -136,7 +136,7 @@ def main():
             
             req = req.replace("CALLID", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(32))))
             req = req.replace("BRANCH", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(10))))
-
+            req = req.replace("TAG", ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(8))))
 
             if args.PROTOCOL == "tcp":
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -151,6 +151,8 @@ def main():
             try:
                 sock.settimeout(2.0)
                 sock.connect((args.DST, args.DPORT))
+                lip, lport = sock.getsockname()
+                req = req.replace("LPORT", str(lport))
                 sock.send(req.encode())
                 response = sock.recv(1024)
 

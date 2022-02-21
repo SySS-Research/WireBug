@@ -2,7 +2,7 @@ INVITE sip:USER@DOMAIN SIP/2.0
 Via: SIP/2.0/PROTO SRC:LPORT;branch=z9hG4bKBRANCH
 Max-Forwards: 70
 To: sip:USER@DOMAIN
-From: <sip:100@DOMAIN>
+From: <sip:100@DOMAIN>;tag=TAG
 Contact: <sip:100@SRC:LPORT;transport=PROTO>;expires=600
 Call-ID: CALLID
 CSeq: 1 INVITE

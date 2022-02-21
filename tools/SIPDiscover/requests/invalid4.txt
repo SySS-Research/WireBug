@@ -1,11 +1,11 @@
-REGISTER sip:USER@DOMAIN SIP/2.0
+INVITE sip:USER@DOMAIN SIP/2.0
 Via: SIP/2.0/PROTO SRC:LPORT;branch=z9hG4bKBRANCH
 Max-Forwards: 70
 To: sip:USER@DOMAIN
-From: <sip:USER@DOMAIN>;tag=TAG
-Contact: <sip:USER@SRC:LPORT;transport=PROTO>;expires=600
+From: <sip:100@DOMAIN>
+Contact: <sip:100@SRC:LPORT;transport=PROTO>;expires=600
 Call-ID: CALLID
-CSeq: 1 REGISTER
+CSeq: 1 INVITE
 User-Agent: WireBug
 Expires: 600
 Content-Length: 0

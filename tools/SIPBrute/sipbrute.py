@@ -227,11 +227,13 @@ def main():
             
             callid = ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(32)))
             branch = ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(10)))
+            tag = ( ''.join(random.SystemRandom().choice(string.ascii_lowercase + string.digits) for _ in range(8)))
 
             req = get_register()
             req = replace_payload(req)
             req = req.replace("CALLID", callid)
             req = req.replace("BRANCH", branch)
+            req = req.replace("TAG", tag)
 
             if args.PROTOCOL == "tcp":
                 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -246,6 +248,8 @@ def main():
             try:
                 sock.settimeout(2.0)
                 sock.connect((args.DST, args.DPORT))
+                lip, lport = sock.getsockname()
+                req = req.replace("LPORT", str(lport))
                 sock.send(req.encode())
                 response = sock.recv(1024)
                 
@@ -259,6 +263,8 @@ def main():
                     if args.v:
                         print("\033[1;34m[*]\033[0m Nonce received")
                     auth = calc_auth(response, lines[i], callid, branch)
+                    auth = auth.replace("LPORT", str(lport))
+                    auth = auth.replace("TAG", tag)
                     sock.send(auth.encode())
                     response = sock.recv(1024)
                     result = get_results(response)
