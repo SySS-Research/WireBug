@@ -4,7 +4,7 @@ getlib(){
     wget -P ./tools/DecryptSRTP/ https://github.com/cisco/libsrtp/archive/master.zip
     unzip -d ./tools/DecryptSRTP/ ./tools/DecryptSRTP/master.zip
     rm ./tools/DecryptSRTP/master.zip 
-    cd ./tools/DecryptSRTP/libsrtp-master && ./configure
+    cd ./tools/DecryptSRTP/libsrtp-main && ./configure
     make
     exit 1
 }

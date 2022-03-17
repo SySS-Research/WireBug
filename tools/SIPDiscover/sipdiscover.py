@@ -191,7 +191,7 @@ def main():
 
                     print("\n")
                 else:
-                    print("\033[1;31m[!]\033[0m No response recived")
+                    print("\033[1;31m[!]\033[0m No response received")
 
                 sock.close()
 
@@ -200,7 +200,7 @@ def main():
                 sys.exit(0)
 
             except:
-                print("\033[1;31m[!]\033[0m No response recived")
+                print("\033[1;31m[!]\033[0m No response received")
                 print("\n")
                 sock.close()
 

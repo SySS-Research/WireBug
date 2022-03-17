@@ -20,7 +20,7 @@ if [ -z "$keysize" ]||[ -z "$key" ]||[ -z "$infile" ];then
 else
 
 	decrypt(){	
-		./libsrtp-master/test/rtp_decoder -e $keysize -b $key < $infile | text2pcap -t "%M:%S." -u 10000,10000 - - > $outfile
+		./libsrtp-main/test/rtp_decoder -e $keysize -b $key < $infile | text2pcap -t "%M:%S." -u 10000,10000 - - > $outfile
 		exit 0
 	}
 
